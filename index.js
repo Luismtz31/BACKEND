@@ -4,7 +4,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -32,7 +32,31 @@ app.get('/', (req, res) => {
   res.send('API Backend funcionando');
 });
 
+// Importar rutas
+const productosRoutes = require('./routes/productos');
+app.use('/api/productos', productosRoutes(db));
 
+
+const clientesRoutes = require('./routes/clientes');
+app.use('/api/clientes', clientesRoutes(db));
+
+const ventasRoutes = require('./routes/ventas');
+app.use('/api/ventas', ventasRoutes(db));
+
+const detalleVentaRoutes = require('./routes/detalle_venta');
+app.use('/api/detalles', detalleVentaRoutes(db));
+
+const empleadosRoutes = require('./routes/empleados');
+app.use('/api/empleados', empleadosRoutes(db));
+
+const tareasRoutes = require('./routes/tareas');
+app.use('/api/tareas', tareasRoutes(db));
+
+const proveedoresRoutes = require('./routes/proveedores');
+app.use('/api/proveedores', proveedoresRoutes(db));
+
+const metodosPagoRoutes = require('./routes/metodos_pago');
+app.use('/api/metodos_pago', metodosPagoRoutes(db));
 
 
 app.listen(port, '0.0.0.0', () => {
